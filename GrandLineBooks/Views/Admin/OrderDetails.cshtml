@@ -1,0 +1,211 @@
+@model GrandLineBooks.Models.Order
+@{
+    ViewData["Title"] = "Detail Pesanan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .info-label {
+        color: #ffd700 !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+    }
+
+    .info-value {
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
+    }
+
+    .table-header-text {
+        color: #ffd700 !important;
+        font-weight: bold !important;
+        font-size: 15px !important;
+    }
+
+    .table-cell-text {
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
+    }
+
+    .subtotal-text {
+        color: #ffd700 !important;
+        font-weight: bold !important;
+        font-size: 16px !important;
+    }
+</style>
+
+<div class="admin-card">
+    <div class="admin-card-header">
+        <h4><i class="fas fa-receipt"></i> Detail Pesanan #@Model.Id.Substring(0, 8)</h4>
+        <a asp-action="Orders" class="btn btn-admin-secondary">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5
+                style="color: #ffd700; font-weight: bold; margin-bottom: 20px; border-bottom: 2px solid #ffd700; padding-bottom: 10px;">
+                <i class="fas fa-info-circle"></i> Informasi Pesanan
+            </h5>
+            <div style="background: #000000; border: 2px solid #ffd700; border-radius: 10px; padding: 25px;">
+                <table style="width: 100%;">
+                    <tr style="margin-bottom: 15px;">
+                        <td width="150" class="info-label">Order ID:</td>
+                        <td class="info-value">#@Model.Id</td>
+                    </tr>
+                    <tr style="margin-bottom: 15px;">
+                        <td class="info-label">Customer:</td>
+                        <td class="info-value">@ViewBag.CustomerName</td>
+                    </tr>
+                    <tr style="margin-bottom: 15px;">
+                        <td class="info-label">Email:</td>
+                        <td class="info-value">@ViewBag.CustomerEmail</td>
+                    </tr>
+                    <tr style="margin-bottom: 15px;">
+                        <td class="info-label">Telepon:</td>
+                        <td class="info-value">@ViewBag.CustomerPhone</td>
+                    </tr>
+                    <tr style="margin-bottom: 15px;">
+                        <td class="info-label">Tanggal:</td>
+                        <td class="info-value">@Model.OrderDate.ToString("dd MMMM yyyy HH:mm")</td>
+                    </tr>
+                    <tr style="margin-bottom: 15px;">
+                        <td class="info-label">Status:</td>
+                        <td style="padding: 8px 0;">
+                            @if (Model.Status == "Pending")
+                            {
+                                <span class="badge bg-warning text-dark"
+                                    style="font-size: 15px; padding: 8px 16px; font-weight: bold;">Pending</span>
+                            }
+                            else if (Model.Status == "Processing")
+                            {
+                                <span class="badge bg-info text-dark"
+                                    style="font-size: 15px; padding: 8px 16px; font-weight: bold;">Processing</span>
+                            }
+                            else if (Model.Status == "Shipped")
+                            {
+                                <span class="badge bg-primary"
+                                    style="font-size: 15px; padding: 8px 16px; font-weight: bold;">Shipped</span>
+                            }
+                            else if (Model.Status == "Delivered")
+                            {
+                                <span class="badge bg-success"
+                                    style="font-size: 15px; padding: 8px 16px; font-weight: bold;">Delivered</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger"
+                                    style="font-size: 15px; padding: 8px 16px; font-weight: bold;">Cancelled</span>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h5
+                style="color: #ffd700; font-weight: bold; margin-bottom: 20px; border-bottom: 2px solid #ffd700; padding-bottom: 10px;">
+                <i class="fas fa-map-marker-alt"></i> Alamat Pengiriman
+            </h5>
+            <div style="background: #000000; border: 2px solid #ffd700; border-radius: 10px; padding: 25px;">
+                <p style="color: #ffffff; margin: 0; line-height: 1.8; font-size: 15px; font-weight: 500;">
+                    @Model.ShippingAddress</p>
+            </div>
+        </div>
+    </div>
+
+    <h5
+        style="color: #ffd700; font-weight: bold; margin-bottom: 20px; margin-top: 35px; border-bottom: 2px solid #ffd700; padding-bottom: 10px;">
+        <i class="fas fa-box"></i> Item Pesanan
+    </h5>
+    <div class="table-responsive">
+        <table class="table table-hover" style="border: 2px solid #ffd700;">
+            <thead>
+                <tr style="background: #000000;">
+                    <th class="table-header-text" style="padding: 18px;">Buku</th>
+                    <th class="text-center table-header-text" style="padding: 18px;">Jumlah</th>
+                    <th class="text-end table-header-text" style="padding: 18px;">Harga</th>
+                    <th class="text-end table-header-text" style="padding: 18px;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items != null && Model.Items.Count > 0)
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr style="border-bottom: 2px solid #333; background: #0d0d0d;">
+                            <td class="table-cell-text" style="padding: 18px;">@item.BookTitle</td>
+                            <td class="text-center table-cell-text" style="padding: 18px;">@item.Quantity</td>
+                            <td class="text-end table-cell-text" style="padding: 18px;">Rp @item.Price.ToString("N0")</td>
+                            <td class="text-end subtotal-text" style="padding: 18px;">Rp @((item.Price *
+                                                        item.Quantity).ToString("N0"))</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center"
+                            style="color: #ffffff; background: #0d0d0d; padding: 25px; font-size: 15px;">Tidak ada item</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr style="background: #000000; border-top: 4px solid #ffd700;">
+                    <td colspan="3" class="text-end" style="padding: 25px;">
+                        <h3 class="mb-0" style="color: #ffffff; font-weight: bold; font-size: 22px;">TOTAL PEMBAYARAN:
+                        </h3>
+                    </td>
+                    <td class="text-end" style="padding: 25px;">
+                        <h2 class="mb-0"
+                            style="color: #ffd700; font-weight: bold; font-size: 28px; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);">
+                            Rp @Model.TotalAmount.ToString("N0")
+                        </h2>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <h5
+            style="color: #ffd700; font-weight: bold; margin-bottom: 20px; border-bottom: 2px solid #ffd700; padding-bottom: 10px;">
+            <i class="fas fa-edit"></i> Update Status Pesanan
+        </h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <form method="post" asp-action="UpdateOrderStatus" class="d-inline">
+                <input type="hidden" name="orderId" value="@Model.Id" />
+                <input type="hidden" name="status" value="Processing" />
+                <button type="submit" class="btn btn-info btn-lg" style="font-weight: bold; padding: 12px 25px;">
+                    <i class="fas fa-cog"></i> Processing
+                </button>
+            </form>
+            <form method="post" asp-action="UpdateOrderStatus" class="d-inline">
+                <input type="hidden" name="orderId" value="@Model.Id" />
+                <input type="hidden" name="status" value="Shipped" />
+                <button type="submit" class="btn btn-primary btn-lg" style="font-weight: bold; padding: 12px 25px;">
+                    <i class="fas fa-truck"></i> Shipped
+                </button>
+            </form>
+            <form method="post" asp-action="UpdateOrderStatus" class="d-inline">
+                <input type="hidden" name="orderId" value="@Model.Id" />
+                <input type="hidden" name="status" value="Delivered" />
+                <button type="submit" class="btn btn-success btn-lg" style="font-weight: bold; padding: 12px 25px;">
+                    <i class="fas fa-check"></i> Delivered
+                </button>
+            </form>
+            <form method="post" asp-action="UpdateOrderStatus" class="d-inline"
+                onsubmit="return confirm('Yakin cancel pesanan ini?')">
+                <input type="hidden" name="orderId" value="@Model.Id" />
+                <input type="hidden" name="status" value="Cancelled" />
+                <button type="submit" class="btn btn-danger btn-lg" style="font-weight: bold; padding: 12px 25px;">
+                    <i class="fas fa-times"></i> Cancelled
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
