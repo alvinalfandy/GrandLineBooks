@@ -43,7 +43,8 @@
 
 <div align="center">
 
-[![Setup Web Service & Configuration](https://img.shields.io/badge/▶️_WATCH_VIDEO-Setup_Web_Service_&_Configuration-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=YOURVIDEOLINK)
+![Setup Web Service & Configuration](https://img.shields.io/badge/⚙️_Setup_Web_Service_&_Configuration-SOON-FF0000?style=for-the-badge&logo=soon&logoColor=white)
+
 
 
 </div>
