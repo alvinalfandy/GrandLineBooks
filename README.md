@@ -41,13 +41,7 @@
 
 ### 📹 Video Tutorial Setup & Konfigurasi
 
-<div align="center">
-
-![Setup Web Service & Configuration](https://img.shields.io/badge/⚙️_Setup_Web_Service_&_Configuration-SOON-FF0000?style=for-the-badge&logo=soon&logoColor=white)
-
-
-
-</div>
+l[!Youtube](https://img.shields.io/badge/YouTube-Watch%20Video-red)](https://youtu.be/ZAnYfGCxrlo?si=vzxxP92l9Bq7zQVs)
 
 ---
 
