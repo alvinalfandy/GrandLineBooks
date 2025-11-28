@@ -41,7 +41,7 @@
 
 ### 📹 Video Tutorial Setup & Konfigurasi
 
-l[!Youtube](https://img.shields.io/badge/YouTube-Watch%20Video-red)](https://youtu.be/ZAnYfGCxrlo?si=vzxxP92l9Bq7zQVs)
+[![YouTube Video](https://img.youtube.com/vi/ZAnYfGCxrlo/maxresdefault.jpg)](https://youtu.be/ZAnYfGCxrlo?si=vzxxP92l9Bq7zQVs)
 
 ---
 
